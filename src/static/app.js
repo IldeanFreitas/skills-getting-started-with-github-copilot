@@ -104,4 +104,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize app
   fetchActivities();
+
+  // BMI Calculator functionality
+  const bmiForm = document.getElementById("bmi-form");
+  const bmiResultDiv = document.getElementById("bmi-result");
+
+  bmiForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const weight = parseFloat(document.getElementById("weight").value);
+    const height = parseFloat(document.getElementById("height").value);
+
+    try {
+      const response = await fetch("/calculate-bmi", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ weight, height }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        bmiResultDiv.innerHTML = `
+          <div class="bmi-result-content">
+            <h4>Resultado do IMC</h4>
+            <p class="bmi-value">IMC: <strong>${result.bmi}</strong></p>
+            <p class="bmi-classification">Classificação: <strong>${result.classification}</strong></p>
+            <p class="bmi-category">Categoria: <strong>${result.category}</strong></p>
+          </div>
+        `;
+        bmiResultDiv.className = "bmi-success";
+      } else {
+        bmiResultDiv.innerHTML = `<p class="error">${result.detail || "Erro ao calcular IMC"}</p>`;
+        bmiResultDiv.className = "error";
+      }
+
+      bmiResultDiv.classList.remove("hidden");
+
+      // Hide result after 5 seconds
+      setTimeout(() => {
+        bmiResultDiv.classList.add("hidden");
+      }, 5000);
+    } catch (error) {
+      bmiResultDiv.innerHTML = `<p class="error">Falha ao calcular IMC. Tente novamente.</p>`;
+      bmiResultDiv.className = "error";
+      bmiResultDiv.classList.remove("hidden");
+      console.error("Error calculating BMI:", error);
+    }
+  });
 });

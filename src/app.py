@@ -8,11 +8,18 @@ for extracurricular activities at Mergington High School.
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
+from pydantic import BaseModel
 import os
 from pathlib import Path
 
 app = FastAPI(title="Mergington High School API",
               description="API for viewing and signing up for extracurricular activities")
+
+
+# BMI calculation model
+class BMIRequest(BaseModel):
+    weight: float  # Weight in kilograms
+    height: float  # Height in meters
 
 # Mount the static files directory
 current_dir = Path(__file__).parent
@@ -108,3 +115,45 @@ def signup_for_activity(activity_name: str, email: str):
     # Adiciona o estudante
     activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
+
+
+@app.post("/calculate-bmi")
+def calculate_bmi(bmi_request: BMIRequest):
+    """Calculate BMI (Body Mass Index)"""
+    weight = bmi_request.weight
+    height = bmi_request.height
+    
+    # Validate inputs
+    if weight <= 0:
+        raise HTTPException(status_code=400, detail="Weight must be greater than 0")
+    if height <= 0:
+        raise HTTPException(status_code=400, detail="Height must be greater than 0")
+    
+    # Calculate BMI: weight (kg) / height² (m²)
+    bmi = weight / (height ** 2)
+    
+    # Determine BMI classification
+    if bmi < 18.5:
+        classification = "Underweight"
+        category = "abaixo do peso"
+    elif 18.5 <= bmi < 25:
+        classification = "Normal weight"
+        category = "peso normal"
+    elif 25 <= bmi < 30:
+        classification = "Overweight"
+        category = "sobrepeso"
+    elif 30 <= bmi < 35:
+        classification = "Obesity Class I"
+        category = "obesidade grau I"
+    elif 35 <= bmi < 40:
+        classification = "Obesity Class II"
+        category = "obesidade grau II"
+    else:
+        classification = "Obesity Class III"
+        category = "obesidade grau III"
+    
+    return {
+        "bmi": round(bmi, 2),
+        "classification": classification,
+        "category": category
+    }
