@@ -39,6 +39,23 @@
         </form>
         <div id="message" class="hidden"></div>
       </section>
+
+      <section id="bmi-calculator">
+        <h3>Calculadora de IMC</h3>
+        <p>Calcule seu Índice de Massa Corporal (IMC)</p>
+        <form id="bmi-form">
+          <div class="form-group">
+            <label for="weight">Peso (kg):</label>
+            <input type="number" id="weight" step="0.1" min="1" required placeholder="Ex: 70" />
+          </div>
+          <div class="form-group">
+            <label for="height">Altura (m):</label>
+            <input type="number" id="height" step="0.01" min="0.5" max="3" required placeholder="Ex: 1.75" />
+          </div>
+          <button type="submit">Calcular IMC</button>
+        </form>
+        <div id="bmi-result" class="hidden"></div>
+      </section>
     </main>
 
     <footer>

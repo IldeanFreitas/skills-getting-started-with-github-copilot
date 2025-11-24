@@ -169,3 +169,72 @@ footer {
   font-style: italic;
   margin-left: 4px;
 }
+
+/* BMI Calculator Styles */
+#bmi-calculator {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+#bmi-calculator h3 {
+  color: white;
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+#bmi-calculator p {
+  margin-bottom: 15px;
+  opacity: 0.95;
+}
+
+#bmi-calculator .form-group label {
+  color: white;
+}
+
+#bmi-calculator button {
+  background-color: white;
+  color: #667eea;
+  font-weight: bold;
+}
+
+#bmi-calculator button:hover {
+  background-color: #f0f0f0;
+}
+
+#bmi-result {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: white;
+  color: #333;
+}
+
+.bmi-result-content {
+  text-align: center;
+}
+
+.bmi-result-content h4 {
+  color: #667eea;
+  margin-bottom: 15px;
+}
+
+.bmi-value {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.bmi-value strong {
+  color: #667eea;
+  font-size: 28px;
+}
+
+.bmi-classification,
+.bmi-category {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.bmi-success {
+  background-color: white;
+  border: 2px solid #667eea;
+}
+
