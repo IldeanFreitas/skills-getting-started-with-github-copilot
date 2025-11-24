@@ -143,10 +143,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       bmiResultDiv.classList.remove("hidden");
 
-      // Hide result after 10 seconds
+      // Hide result after 5 seconds
       setTimeout(() => {
         bmiResultDiv.classList.add("hidden");
-      }, 10000);
+      }, 5000);
     } catch (error) {
       bmiResultDiv.innerHTML = `<p class="error">Falha ao calcular IMC. Tente novamente.</p>`;
       bmiResultDiv.className = "error";
